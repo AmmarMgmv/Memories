@@ -8,6 +8,8 @@ import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
+import { register } from "./controllers/auth.js";
+
 
 // CONFIGURATIONS
 const __filename = fileURLToPath(import.meta.url);
@@ -23,6 +25,7 @@ app.use(bodyParser.urlencoded({limit: "30mb", extended: true}));
 app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, 'public/assets')));
 
+
 // FILE STORAGE
 //Storage configuration
 const storage = multer.diskStorage({
@@ -37,6 +40,12 @@ const storage = multer.diskStorage({
 });
 //We create an instance of multer to handle file uploads using the storage configuration above
 const upload = multer({storage});
+
+
+//ROUTES WITH FILES
+//Set up the route to handle user registration requests that include a profile picture upload
+app.post("/auth/register", upload.single("picture"), register);
+
 
 //MONGOOSE SETUP
 //PORT should go to our predefined port and if that port doesnt work, use port 6001
