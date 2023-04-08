@@ -24,12 +24,31 @@ app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, 'public/assets')));
 
 // FILE STORAGE
+//Storage configuration
 const storage = multer.diskStorage({
+    //This tells it where to store the file
     destination: function(req, file, cb){
         cb(null, "public/assets");
     },
+    //This tells is how to name the file, in this case we use the original name
     filename: function(req, file, cb){
         cb(null, file.originalname);
     },
 });
+//We create an instance of multer to handle file uploads using the storage configuration above
 const upload = multer({storage});
+
+//MONGOOSE SETUP
+//PORT should go to our predefined port and if that port doesnt work, use port 6001
+const PORT = process.env.PORT || 6001;
+//Connecting to mongo database from node server using our MONGO_URL
+mongoose.connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+//If it works, we will console log the port
+.then(() => {
+    app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+})
+//If it doesnt work, we will console log an error
+.catch((error) => console.log(`${error} did not connect`));
