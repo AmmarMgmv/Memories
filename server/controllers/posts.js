@@ -2,6 +2,7 @@ import Post from "../models/Post.js";
 import User from "../models/User.js";
 
 //CREATE
+//This function allows users to create posts
 export const createPost = async (req, res) => {
     try {
         //Grab userId, description and picturePath from the request
@@ -33,10 +34,25 @@ export const createPost = async (req, res) => {
 }
 
 //READ
+//This function allows us to get the feed posts
 export const getFeedPosts =async (req, res) => {
     try {
          //Send the updated list of post to the front end
          const post = await Post.find();
+         res.status(200).json(post);
+    }
+    catch (err) {
+        res.status(409).json({message: err.message})
+    }
+}
+
+//This function allows us to get users posts only
+export const getUserPosts =async (req, res) => {
+    try {
+        //Grab userID from the req
+        const {userId} = req.params;
+         //Send the posts that belong to the user 
+         const post = await Post.find({userId});
          res.status(200).json(post);
     }
     catch (err) {
