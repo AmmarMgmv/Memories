@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoke';
+import jwt from 'jsonwebtoken';
 
 //Authenticate requests to protected routes that require a valid JWT token for access
 export const verifyToken = async (req, res, next) => {

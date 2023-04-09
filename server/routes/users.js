@@ -1,0 +1,17 @@
+import { express } from "express";
+//These have not been created yet
+import {getUser, getUserFriends, addRemoveFriend, } from "../controllers/users.js";
+import {verifiedToken, verifyToken} from "../middleware/auth.js";
+
+const router = express.Router();
+
+//READ
+//Grab ID from database and get the users data
+router.get("/:id", verifyToken, getUser);
+//Grabs the users friends
+router.get("/:id/friends", verifyToken, getUserFriends);
+
+//Updates friends list when fried is added/removed
+router.patch("/:id/:friendId", verifyToken, addRemoveFriend);
+
+export default router;
