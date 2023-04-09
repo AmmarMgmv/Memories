@@ -1,5 +1,4 @@
 import { express } from "express";
-//These have not been created yet
 import {getUser, getUserFriends, addRemoveFriend, } from "../controllers/users.js";
 import {verifiedToken, verifyToken} from "../middleware/auth.js";
 
