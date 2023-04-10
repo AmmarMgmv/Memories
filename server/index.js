@@ -12,8 +12,11 @@ import userRoutes from "./routes/users.js"
 import authRoutes from "./routes/auth.js";
 import postRoutes from "./routes/posts.js"
 import { register } from "./controllers/auth.js";
-import {createPost} from "./controllers/posts.js";
+import { createPost } from "./controllers/posts.js";
 import { verifyToken } from "./middleware/auth.js";
+import User from "./models/User.js";
+import Post from "./models/Post.js";
+import { users, posts } from "./data/index.js";
 
 
 // CONFIGURATIONS
@@ -71,6 +74,10 @@ mongoose.connect(process.env.MONGO_URL, {
 //If it works, we will console log the port
 .then(() => {
     app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+
+    //ONLY RUN ONCE
+    // User.insertMany(users);
+    // Post.insertMany(posts);
 })
 //If it doesnt work, we will console log an error
 .catch((error) => console.log(`${error} did not connect`));
