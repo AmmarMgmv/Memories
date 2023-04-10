@@ -1,4 +1,4 @@
-import User from "../models/User";
+import User from "../models/User.js";
 
 //READ
 //This function gets the user data based on the provided ID
