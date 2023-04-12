@@ -47,7 +47,8 @@ const Form =() => {
     const [pageType, setPageType] = useState("login");
     const {palette} = useTheme();
     const dispatch = useDispatch();
-    const navigate = useMediaQuery("(min-width: 600px)");
+    const navigate = useNavigate();
+    const isNonMobile = useMediaQuery("(min-width: 600px)");
     const isLogin = pageType === "login";
     const isRegister = pageType === "register";
 
@@ -70,7 +71,29 @@ const Form =() => {
                 resetForm
             }) => (
                <form onSubmit={handleSubmit}>
-                    
+                    <Box
+                        display="grid"
+                        gap="30px"
+                        gridTemplateColumns="repeat(3, minmax(0, 1fr))"
+                        sx={{
+                            "& > div": { gridColumn: isNonMobile ? undefined : "span 4"},
+                        }}
+                    >
+                        {isRegister && (
+                            <>
+                                <TextField
+                                    label="First Name"
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    value={values.firstName}
+                                    name="firstName"
+                                    error={Boolean(touched.firstName) && Boolean(errors.firstName)}
+                                    helperText={touched.firstName && errors.firstName}
+                                    sx={{gridColumn: "span 2"}}
+                                />
+                            </>
+                        )}
+                    </Box>
                </form> 
             )}
         </Formik>
